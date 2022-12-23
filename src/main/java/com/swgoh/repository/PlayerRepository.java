@@ -1,13 +1,13 @@
 package com.swgoh.repository;
 
-import com.swgoh.entity.Guild;
+import com.swgoh.entity.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface GuildRepository extends JpaRepository<Guild, Long> {
+public interface PlayerRepository extends JpaRepository<Player, Long> {
 
-    Optional<Guild> findBySwgohId(String swgohId);
+    Optional<Player> findBySwgohId(String swgohId);
 }

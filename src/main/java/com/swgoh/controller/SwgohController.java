@@ -1,13 +1,12 @@
 package com.swgoh.controller;
 
 import com.swgoh.entity.Guild;
+import com.swgoh.entity.Player;
 import com.swgoh.service.GuildService;
+import com.swgoh.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/swgoh")
@@ -16,11 +15,22 @@ public class SwgohController {
     @Autowired
     GuildService guildService;
 
-    @GetMapping("/guild")
-    public ResponseEntity<Guild> findUserById(@Param(value = "allyCode") int allyCode) {
+    @Autowired
+    PlayerService playerService;
+
+    @GetMapping("/guild/{allyCode}")
+    public ResponseEntity<Guild> findGuildById(@PathVariable(value = "allyCode") int allyCode) {
 
         Guild guild = guildService.getGuild(allyCode);
 
         return ResponseEntity.ok().body(guild);
+    }
+
+    @GetMapping("/player/{allyCode}")
+    public ResponseEntity<Player> findUserById(@PathVariable(value = "allyCode") int allyCode) {
+
+        Player player = playerService.getPlayer(allyCode);
+
+        return ResponseEntity.ok().body(player);
     }
 }
