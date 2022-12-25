@@ -75,7 +75,7 @@ public class GuildService {
 
         playerDtos.stream().forEach(p -> {
 
-            Player player = playerService.getPlayer(p.getId());
+            Player player = playerService.getPlayer(guild, p.getAllyCode().intValue());
 
             if (player == null) {
                 player = p.toPlayer();

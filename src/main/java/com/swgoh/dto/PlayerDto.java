@@ -22,8 +22,7 @@ public class PlayerDto {
     private Long poUTCOffsetMinutes;
     private Long grandArenaLifeTime;
     private Long updated;
-    @JsonIgnore
-    private List<ToonDto> roster;
+    private List<CaracterDto> roster;
 
     @JsonIgnore
     private String titles;

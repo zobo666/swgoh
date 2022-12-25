@@ -2,7 +2,11 @@ package com.swgoh.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="players")
@@ -13,6 +17,7 @@ public class Player {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String swgohId;
 
     private String playerName;
@@ -22,7 +27,11 @@ public class Player {
     private Long allyCode;
 
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "guild_id")
     private Guild guild;
+
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    List<PlayerCaracter> playerCaracters = new ArrayList<>();
 }
