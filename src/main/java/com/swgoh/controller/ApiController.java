@@ -2,25 +2,25 @@ package com.swgoh.controller;
 
 import com.swgoh.entity.Guild;
 import com.swgoh.entity.Player;
-import com.swgoh.service.GuildService;
-import com.swgoh.service.PlayerService;
-import com.swgoh.service.CaracterService;
+import com.swgoh.service.GuildServiceImpl;
+import com.swgoh.service.PlayerServiceImpl;
+import com.swgoh.service.CaracterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/swgoh")
-public class SwgohController {
+@RequestMapping("/swgoh/api")
+public class ApiController {
 
     @Autowired
-    GuildService guildService;
+    GuildServiceImpl guildService;
 
     @Autowired
-    PlayerService playerService;
+    PlayerServiceImpl playerService;
 
     @Autowired
-    CaracterService caracterService;
+    CaracterServiceImpl caracterService;
 
     @GetMapping("/guild/{allyCode}")
     public ResponseEntity<Guild> updateGuild(@PathVariable(value = "allyCode") int allyCode) {

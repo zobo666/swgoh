@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <title>Territory Editor</title>
+</head>
+
+<body>
+    <div id="territory-list">
+    <table>
+        <tr>
+            <th>Zone</th>
+            <th>Name</th>
+            <th>Alignment</th>
+            <th>First Star</th>
+            <th>Second Star</th>
+            <th>Third Star</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="territory : ${territories}">
+            <td th:text="${territory.getZoneNo()}"></td>
+            <td th:text="${territory.getName()}"></td>
+            <td th:text="${territory.getAlignment()}"></td>
+            <td th:text="${territory.getFirstStar()}"></td>
+            <td th:text="${territory.getSecondStar()}"></td>
+            <td th:text="${territory.getThirdStar()}"></td>
+            <td>
+                <a th:href="@{/swgoh/editTerritories}">Edit</a>
+                |
+                <a th:href="@{/swgoh/editTerritories}">Operations</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
