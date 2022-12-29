@@ -8,11 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/swgoh")
@@ -21,11 +20,32 @@ public class TerritoryController {
     @Autowired
     private TerritoryService territoryService;
 
-    @GetMapping(value = "/editTerritory/{battleId}")
+    @Autowired
+    private BattleService battleService;
+
+    @GetMapping(value = "/listTerritory/{battleId}")
     public String populateTerritoryList(Model model, @PathVariable(name="battleId") Long battleId) {
 
         List<Territory> territories = territoryService.getTerritories(battleId);
         model.addAttribute("territories", territories);
+        return "territory-list";
+    }
+
+    @GetMapping(value = "/editTerritory/{territoryId}")
+    public String editTerritory(Model model, @PathVariable(name="territoryId") Long territoryId) {
+
+        Territory territory = territoryService.getTerritory(territoryId);
+        model.addAttribute("territory", territory);
+        model.addAttribute("battleId", territory.getBattle().getId());
         return "territory-editor";
+    }
+
+    @PostMapping(value = "/saveTerritory")
+    public String saveTerritory(@ModelAttribute(value="territory") Territory territory, Model model) {
+
+
+        Territory result = territoryService.saveTerritory(territory);
+
+        return "redirect:/swgoh/listTerritory/%s".formatted(result.getId());
     }
 }

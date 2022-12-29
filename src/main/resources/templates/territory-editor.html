@@ -7,31 +7,35 @@
 </head>
 
 <body>
-    <div id="territory-list">
-    <table>
-        <tr>
-            <th>Zone</th>
-            <th>Name</th>
-            <th>Alignment</th>
-            <th>First Star</th>
-            <th>Second Star</th>
-            <th>Third Star</th>
-            <th>Action</th>
-        </tr>
-        <tr th:each="territory : ${territories}">
-            <td th:text="${territory.getZoneNo()}"></td>
-            <td th:text="${territory.getName()}"></td>
-            <td th:text="${territory.getAlignment()}"></td>
-            <td th:text="${territory.getFirstStar()}"></td>
-            <td th:text="${territory.getSecondStar()}"></td>
-            <td th:text="${territory.getThirdStar()}"></td>
-            <td>
-                <a th:href="@{/swgoh/editTerritories}">Edit</a>
-                |
-                <a th:href="@{/swgoh/editTerritories}">Operations</a>
-            </td>
-        </tr>
-    </table>
-</div>
+    <form th:action="@{/swgoh/saveTerritory}" th:object="${territory}" method="post">
+    <div id="container">
+            <input type="hidden" th:field="*{id}" value="${territory.getId()}" />
+            <input type="hidden" th:field="*{zoneNo}" value="${territory.getZoneNo()}" />
+            <input type="hidden" th:field="*{battle}" value="${territory.getBattle()}" />
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" th:field="*{name}" value="${territory.getName()}" /></td>
+                </tr>
+                <tr>
+                    <td>Alignment</td>
+                    <td><input type="text" th:field="*{alignment}" value="${territory.getAlignment()}" /></td>
+                </tr>
+                <tr>
+                    <td>First Star</td>
+                    <td><input type="text" th:field="*{firstStar}" value="${territory.getFirstStar()}" /></td>
+                </tr>
+                <tr>
+                    <td>Second Star</td>
+                    <td><input type="text" th:field="*{secondStar}" value="${territory.getSecondStar()}" /></td>
+                </tr>
+                <tr>
+                    <td>Third Star</td>
+                    <td><input type="text" th:field="*{thirdStar}" value="${territory.getThirdStar()}" /></td>
+                </tr>
+            </table>
+            <input type="submit" value="Save"/>
+        </div>
+    </form>
 </body>
 </html>

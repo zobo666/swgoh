@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Battle {
     private String code;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "battle", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "battle", cascade = CascadeType.ALL)
     private List<Territory> territories = new ArrayList<>();
 }
