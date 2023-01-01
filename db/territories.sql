@@ -4,6 +4,7 @@ create table swgoh.territories (
 	zone_no INTEGER not null,
 	name VARCHAR,
 	alignment VARCHAR check (alignment in ('L', 'D', 'N', 'M')),
+	relic INTEGER,
 	first_star BIGINT,
 	second_star BIGINT,
 	third_star BIGINT,

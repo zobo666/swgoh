@@ -1,6 +1,6 @@
 package com.swgoh.controller;
 
-import com.swgoh.entity.Battle;
+import com.swgoh.dto.TerritorylistDto;
 import com.swgoh.entity.Territory;
 import com.swgoh.service.BattleService;
 import com.swgoh.service.TerritoryService;
@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/swgoh")
@@ -23,29 +22,26 @@ public class TerritoryController {
     @Autowired
     private BattleService battleService;
 
-    @GetMapping(value = "/listTerritory/{battleId}")
+    @GetMapping(value = "/territories/{battleId}")
     public String populateTerritoryList(Model model, @PathVariable(name="battleId") Long battleId) {
 
         List<Territory> territories = territoryService.getTerritories(battleId);
-        model.addAttribute("territories", territories);
-        return "territory-list";
-    }
 
-    @GetMapping(value = "/editTerritory/{territoryId}")
-    public String editTerritory(Model model, @PathVariable(name="territoryId") Long territoryId) {
+        TerritorylistDto territorylist = new TerritorylistDto();
+        territorylist.setTerritories(territories);
 
-        Territory territory = territoryService.getTerritory(territoryId);
-        model.addAttribute("territory", territory);
-        model.addAttribute("battleId", territory.getBattle().getId());
+        model.addAttribute("territories", territorylist);
+
         return "territory-editor";
     }
 
-    @PostMapping(value = "/saveTerritory")
-    public String saveTerritory(@ModelAttribute(value="territory") Territory territory, Model model) {
+    @PostMapping(value = "/territories/save")
+    public String saveTerritory(@ModelAttribute(value="territories") TerritorylistDto territories) {
 
+        territoryService.saveTerritories(territories.getTerritories());
 
-        Territory result = territoryService.saveTerritory(territory);
+        Territory territory = territories.getTerritories().get(0);
 
-        return "redirect:/swgoh/listTerritory/%s".formatted(result.getId());
+        return "redirect:/swgoh/territories/%s".formatted(territory.getBattle().getId());
     }
 }

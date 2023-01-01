@@ -12,4 +12,6 @@ public interface TerritoryService {
     List<Territory> getTerritories(Long battleId);
 
     Territory saveTerritory(Territory territory);
+
+    List<Territory> saveTerritories(List<Territory> territories);
 }

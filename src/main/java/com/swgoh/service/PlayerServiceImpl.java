@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 @Slf4j
-public class PlayerServiceImpl {
+public class PlayerServiceImpl implements PlayerService {
     @Autowired
     private PlayerCaracterRepository playerCaracterRepository;
 

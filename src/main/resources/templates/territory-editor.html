@@ -7,35 +7,41 @@
 </head>
 
 <body>
-    <form th:action="@{/swgoh/saveTerritory}" th:object="${territory}" method="post">
-    <div id="container">
-            <input type="hidden" th:field="*{id}" value="${territory.getId()}" />
-            <input type="hidden" th:field="*{zoneNo}" value="${territory.getZoneNo()}" />
-            <input type="hidden" th:field="*{battle}" value="${territory.getBattle()}" />
+    <form th:action="@{/swgoh/territories/save}" th:object="${territories}" method="post">
+        <fieldset>
             <table>
+                <thead>
                 <tr>
-                    <td>Name</td>
-                    <td><input type="text" th:field="*{name}" value="${territory.getName()}" /></td>
+                    <th>Zone</th>
+                    <th>Name</th>
+                    <th>Alignment</th>
+                    <th>Relic</th>
+                    <th>First Star</th>
+                    <th>Second Star</th>
+                    <th>Third Star</th>
+                    <th>Action</th>
                 </tr>
-                <tr>
-                    <td>Alignment</td>
-                    <td><input type="text" th:field="*{alignment}" value="${territory.getAlignment()}" /></td>
+                </thead>
+                <tbody>
+                <tr th:each="territory, iterStat : *{territories}">
+                    <input type="hidden" th:field="*{territories[__${iterStat.index}__].id}" />
+                    <input type="hidden" th:field="*{territories[__${iterStat.index}__].zoneNo}" />
+                    <input type="hidden" th:field="*{territories[__${iterStat.index}__].battle}" />
+
+                    <td th:text="${territory.getZoneNo()}"></td>
+                    <td><input th:field="*{territories[__${iterStat.index}__].name}" /></td>
+                    <td><input th:field="*{territories[__${iterStat.index}__].alignment}" /></td>
+                    <td><input th:field="*{territories[__${iterStat.index}__].relic}" /></td>
+                    <td><input th:field="*{territories[__${iterStat.index}__].firstStar}" /></td>
+                    <td><input th:field="*{territories[__${iterStat.index}__].secondStar}" /></td>
+                    <td><input th:field="*{territories[__${iterStat.index}__].thirdStar}" /></td>
+                    <td><a th:href="@{'/swgoh/operations/' + ${territory.getId()}}">Operations</a></td>
                 </tr>
-                <tr>
-                    <td>First Star</td>
-                    <td><input type="text" th:field="*{firstStar}" value="${territory.getFirstStar()}" /></td>
-                </tr>
-                <tr>
-                    <td>Second Star</td>
-                    <td><input type="text" th:field="*{secondStar}" value="${territory.getSecondStar()}" /></td>
-                </tr>
-                <tr>
-                    <td>Third Star</td>
-                    <td><input type="text" th:field="*{thirdStar}" value="${territory.getThirdStar()}" /></td>
-                </tr>
+                </tbody>
             </table>
-            <input type="submit" value="Save"/>
-        </div>
+            <input type="submit" id="submitButton" th:value="Save" />
+            <input type="button" value="Back" onclick="history.go(-1)" />
+        </fieldset>
     </form>
 </body>
 </html>

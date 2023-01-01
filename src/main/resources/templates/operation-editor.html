@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <title>Operation Editor</title>
+</head>
+
+<body>
+    <form th:action="@{/swgoh/operations/save}" th:object="${operations}" method="post">
+        <fieldset>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operation No</th>
+                        <th>Territory Points</th>
+                        <th>Toon 1</th>
+                        <th>Toon 2</th>
+                        <th>Toon 3</th>
+                        <th>Toon 4</th>
+                        <th>Toon 5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="operation, iterStat : *{operations}">
+                        <input type="hidden" th:field="*{operations[__${iterStat.index}__].id}" />
+                        <input type="hidden" th:field="*{operations[__${iterStat.index}__].territory}" />
+                        <input type="hidden" th:field="*{operations[__${iterStat.index}__].operationNo}" />
+                        <td th:text="${operation.getOperationNo()}"></td>
+                        <td><input th:field="*{operations[__${iterStat.index}__].territoryPoints}" /></td>
+                        <td><input type="button" value="Edit team" onclick="history.go(-1)" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" id="submitButton" th:value="Save" />
+            <input type="button" value="Back" onclick="history.go(-1)" />
+        </fieldset>
+    </form>
+</body>
+</html>

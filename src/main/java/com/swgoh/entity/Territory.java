@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="territories")
@@ -30,10 +32,15 @@ public class Territory {
 
     private Long thirdStar;
 
+    private Long relic;
+
     @JsonIgnore
     @NotNull
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "battle_id")
     private Battle battle;
+
+    @OneToMany(mappedBy = "territory", cascade = CascadeType.ALL)
+    private List<Operation> players = new ArrayList<>();
 }

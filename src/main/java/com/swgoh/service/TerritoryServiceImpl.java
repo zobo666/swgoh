@@ -36,4 +36,9 @@ public class TerritoryServiceImpl implements TerritoryService {
     public Territory saveTerritory(Territory territory) {
         return territoryRepository.save(territory);
     }
+
+    @Override
+    public List<Territory> saveTerritories(List<Territory> territories) {
+        return territoryRepository.saveAll(territories);
+    }
 }
